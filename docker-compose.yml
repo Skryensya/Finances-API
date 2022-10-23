@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  dev-db:
+    image: postgres:13.2
+    ports:
+      - '5434:5432'
+    environment:
+      POSTGRES_USER: allison
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: postgres
+    networks:
+      - nest-network
+networks:
+  nest-network:

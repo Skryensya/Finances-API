@@ -19,15 +19,19 @@ enum TransactionType {
 model User {
   id    Int    @id @default(autoincrement())
   email String @unique
+  hash  String
 
   firstname String?
   lastname  String?
 
-  password String
-  // Can have many Accounts
+  // Can have many Accounts and many Transactions
   accounts Account[]
-
   Category Category[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
 }
 
 model Account {
@@ -43,12 +47,15 @@ model Account {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("accounts")
 }
 
 model Category {
-  id    Int     @id @default(autoincrement())
+  id    Int             @id @default(autoincrement())
   name  String
   color String?
+  type  TransactionType
 
   Transaction   Transaction? @relation(fields: [transactionId], references: [id])
   transactionId Int?
@@ -59,6 +66,8 @@ model Category {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("categories")
 }
 
 model Transaction {
@@ -76,4 +85,6 @@ model Transaction {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("transactions")
 }
